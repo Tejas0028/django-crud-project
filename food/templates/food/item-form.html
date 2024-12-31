@@ -1,0 +1,57 @@
+{% extends "food/base.html" %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header text-dark bg-white">
+                    <div class="card-title offset-md-4">
+                        <h3>Add Item</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+
+                          <!-- Display non-field errors -->
+                          {% if form.non_field_errors %}
+                          <div class="alert alert-danger">
+                              {% for error in form.non_field_errors %}
+                                  <p>{{ error }}</p>
+                              {% endfor %}
+                          </div>
+                          {% endif %}
+
+                        {% for field in form %}
+
+                        <div class="mb-3">
+                            <label for="id_{{field.name}}" class="form-label">{{field.name.capitalize}}</label>
+                            <div class="form-control-plaintext form-control-lg d-grid gap-2">{{field}}</div>
+                          </div>
+
+                           <!-- Display field-specific errors -->
+                           {% if field.errors %}
+                           <div class="text-danger">
+                               {% for error in field.errors %}
+                                   <p>{{ error }}</p>
+                               {% endfor %}
+                           </div>
+                           {% endif %}
+                         
+                        {% endfor %}
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success mt-3" type="submit">Save</button>
+                        </div>
+                        
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}
